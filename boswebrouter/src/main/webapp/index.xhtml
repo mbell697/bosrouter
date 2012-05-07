@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<p:inputText value="#{testController.from}" label="From"/>
+			<p:inputText value="#{testController.to}" label="To"/>
+			<p:commandButton value="Search" action="#{testController.route()}" update="@form"/>
+		
+			<p:dataTable value="#{testController.route}" var="vertex">
+		
+				<p:column headerText = "Stop Name">
+					<h:outputText value="#{vertex.getProperty('stopName')}"/>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context fireRequestListenersOnForwards="true">
+	<Manager pathname="" />
+	<Resource name="BeanManager" 
+			  auth="Container"
+		      type="javax.enterprise.inject.spi.BeanManager" 
+		      factory="org.jboss.weld.resources.ManagerObjectFactory" />
+	<Resource type="javax.sql.DataSource"
+              name="jdbc/bosrouter"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="${JDBC_CONNECTION_STRING}"
+              username="bosrouter"
+              password="bosrouter"
+              defaultAutoCommit="false"
+              testWhileIdle="true"
+              validationQuery="SELECT 1"
+              maxAge="3600"
+              validationInterval="300"
+	/>
+</Context>
