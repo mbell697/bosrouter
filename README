@@ -1,4 +1,4 @@
-Work in progress system that uses the Boston MBTA data to make intelligent routing choices.  Current in a very early state with work focusing on importing and cleansing the raw and live datasets as well as getting the routing algorithm to a decent state.
+Work in progress system that uses the Boston MBTA data to make intelligent routing choices.  Currently this is in a very early state with work focusing on importing and cleansing the raw and live datasets as well as getting the routing algorithm to a decent state.
 
 To run you'll need to mbta data set from the mbta website, the following files are needed and should be placed in boswebrouter\src\main\java\com\bosrouter\data\
 
