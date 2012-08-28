@@ -1,5 +1,6 @@
 package com.bosrouter.mbta.gtfs;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
@@ -120,7 +121,7 @@ public class MbtaGtfsFile {
 	}
 	
 	private void loadStopTimesData(String filename) throws IOException {
-		CSVReader reader = new CSVReader(new FileReader(filename));
+		CSVReader reader = new CSVReader(new BufferedReader(new FileReader(filename), 16777216));
 	    String [] nextLine;
 	    reader.readNext(); //throw away header line
 	    LOG.info("Loading StopTimes Data");

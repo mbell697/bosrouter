@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.tinkerpop.blueprints.pgm.Edge;
-import com.tinkerpop.blueprints.pgm.Graph;
-import com.tinkerpop.blueprints.pgm.Vertex;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
+import com.tinkerpop.blueprints.Vertex;
 
 public class AStar {
 
@@ -51,11 +51,11 @@ public class AStar {
 			
 			openSet.remove(x);
 			closedSet.add(x);
-			Iterator<Edge> neighbors = x.getOutEdges("travel", "connection").iterator();
+			Iterator<Edge> neighbors = x.getEdges(Direction.OUT, "travel", "connection").iterator();
 			
 			while (neighbors.hasNext()) {
 				Edge e = neighbors.next();
-				Vertex t = e.getInVertex();
+				Vertex t = e.getVertex(Direction.IN);
 				if (closedSet.contains(t))
 					continue;
 				

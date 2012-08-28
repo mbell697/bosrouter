@@ -3,43 +3,36 @@ package com.bosrouter.server;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
+import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bosrouter.geo.GeoMath;
 import com.bosrouter.router.AStar;
 import com.bosrouter.util.MbtaRouteDataImport;
-import com.tinkerpop.blueprints.pgm.Graph;
-import com.tinkerpop.blueprints.pgm.Vertex;
 
 public class RoutingService {
 	private static final Logger LOG = LoggerFactory.getLogger(RoutingService.class);
-    private static RoutingService instance;
-    private Graph graph;
+    private static Graph graph;
 
     private RoutingService() {
-        init();
+
     }
 
-    public static RoutingService instance() {
-        if (instance == null)
-            instance = new RoutingService();
-        return instance;
-    }
-
-	public void init() {
+	public static void init() {
 		MbtaRouteDataImport importer = new MbtaRouteDataImport();
 		LOG.info("Importing MBTA GTFS Data");
-		importer.loadData("/resources/data/mbta/");
+		importer.loadData("data/mbta/");
 		LOG.info("Import Complete");
 		
 		LOG.info("Building TinkerGraph");
 		graph = importer.buildTinkerGraph();
 	}
 	
-	public List<Vertex> route (double fromLat, double fromLng, double toLat, double toLng) {
+	public static List<Vertex> route (double fromLat, double fromLng, double toLat, double toLng) {
+        if (graph == null)
+            init();
 		List<Vertex> result = new LinkedList<Vertex>();
 		
 		List<Vertex> fromList = GeoMath.getNearByVertices(graph, fromLat, fromLng, 0.5);

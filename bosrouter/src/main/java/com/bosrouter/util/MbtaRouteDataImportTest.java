@@ -9,13 +9,13 @@ import java.util.List;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.blueprints.util.io.graphml.GraphMLWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bosrouter.router.AStar;
-import com.tinkerpop.blueprints.pgm.Vertex;
-import com.tinkerpop.blueprints.pgm.impls.tg.TinkerGraph;
-import com.tinkerpop.blueprints.pgm.util.graphml.GraphMLWriter;
 
 public class MbtaRouteDataImportTest implements ServletContextListener{
 
@@ -32,7 +32,7 @@ public class MbtaRouteDataImportTest implements ServletContextListener{
 	}
 	
 	private void routeTest(ServletContextEvent contextEvent) {
-		TinkerGraph graph = loadGraphDataTest(contextEvent);
+		Graph graph = loadGraphDataTest(contextEvent);
 		Vertex start = graph.getVertex("2845");
 		Vertex end = graph.getVertex("2835");		
 		routeTest(start, end);
@@ -73,18 +73,18 @@ public class MbtaRouteDataImportTest implements ServletContextListener{
 		}
 	}
 	
-	private TinkerGraph loadGraphDataTest(ServletContextEvent contextEvent) {
+	private Graph loadGraphDataTest(ServletContextEvent contextEvent) {
 		MbtaRouteDataImport importer = new MbtaRouteDataImport();
 		LOG.info("Importing MBTA GTFS Data");
-		importer.loadData(contextEvent.getServletContext().getRealPath("/resources/data/mbta/") +"/");
+		importer.loadData("data/mbta/");
 		LOG.info("Import Complete");
 		
 		LOG.info("Building TinkerGraph");
-		TinkerGraph tGraph = importer.buildTinkerGraph();
+		Graph tGraph = importer.buildTinkerGraph();
 		OutputStream out;
 		GraphMLWriter writer;
 		try {
-			out = new FileOutputStream("C:/Users/mbell/Desktop/tgraph.graphml");
+			out = new FileOutputStream("tgraph.graphml");
 			writer = new GraphMLWriter(tGraph);
 			writer.outputGraph(out);
 			out.close();

@@ -16,6 +16,6 @@ public class RouteController {
                           @QueryParam("fromLong") double fromLong,
                           @QueryParam("toLat") double toLat,
                           @QueryParam("toLong") double toLong) {
-        return Response.ok().entity(RoutingService.instance().route(fromLat,fromLong,toLat,toLong)).build();
+        return Response.ok().entity(RoutingService.route(fromLat,fromLong,toLat,toLong)).build();
     }
 }

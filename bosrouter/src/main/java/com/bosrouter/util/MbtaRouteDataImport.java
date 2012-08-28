@@ -5,6 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import com.tinkerpop.blueprints.Edge;
+import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.blueprints.impls.neo4j.Neo4jGraph;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
@@ -20,9 +24,6 @@ import com.bosrouter.mbta.gtfs.Routes;
 import com.bosrouter.mbta.gtfs.StopTimes;
 import com.bosrouter.mbta.gtfs.Stops;
 import com.bosrouter.mbta.gtfs.Trips;
-import com.tinkerpop.blueprints.pgm.Edge;
-import com.tinkerpop.blueprints.pgm.Vertex;
-import com.tinkerpop.blueprints.pgm.impls.tg.TinkerGraph;
 
 public class MbtaRouteDataImport {
 	
@@ -44,8 +45,9 @@ public class MbtaRouteDataImport {
 		}		
 	}
 	
-	public TinkerGraph buildTinkerGraph() {
-		TinkerGraph graph = new TinkerGraph();
+	public Graph buildTinkerGraph() {
+		Neo4jGraph graph = new Neo4jGraph("data/graph");
+
 		
 		LOG.info("Building All Tinker Vertices");
 		//create all nodes
@@ -74,7 +76,7 @@ public class MbtaRouteDataImport {
 							           (String)cVert.getId() + "_" +
 							           (String)route.getRoute_id();
 					if (graph.getEdge(edgeIndex) == null) {
-						Edge edge = graph.addEdge(edgeIndex, lastVertex, cVert, "travel");										
+						Edge edge = graph.addEdge(edgeIndex, lastVertex, cVert, "travel");
 						edge.setProperty("routeId", route.getRoute_id());
 						edge.setProperty("routeNameShort", route.getRoute_short_name());
 						edge.setProperty("routeNameLong", route.getRoute_long_name());
@@ -92,7 +94,7 @@ public class MbtaRouteDataImport {
 	}
 	
 	private static final double CONNECTION_DISTANCE = 0.33;
-	private void buildConnections(TinkerGraph graph) {
+	private void buildConnections(Graph graph) {
 		Iterator<Vertex> itr = graph.getVertices().iterator();
 		
 		while (itr.hasNext()) {
