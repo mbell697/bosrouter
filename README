@@ -1,6 +1,6 @@
-Work in progress system that uses the Boston MBTA data to make intelligent routing choices.  Currently this is in a very early state with work focusing on importing and cleansing the raw and live datasets as well as getting the routing algorithm to a decent state.
+Work in progress service that uses the Boston MBTA data to make intelligent routing choices.  Currently this is in a very early state with work focusing on importing and cleansing the raw and live datasets as well as getting the routing algorithm to a decent state.
 
-To run you'll need to mbta data set from the mbta website, the following files are needed and should be placed in boswebrouter\src\main\java\com\bosrouter\data\
+To run you'll need to mbta data set from the mbta website, the following files are needed and should be placed in data\mbta
 
 agency.txt
 calendar.txt
@@ -14,13 +14,14 @@ stops.txt
 transfers.txt
 trips.txt
 
-Currently on application load these files will be parsed and an in memory property graph built using Tinkerpop's Blueprints library.  The property graph is not currently persistent but fits easily in memory for testing.
+Currently on application load these files will be parsed and a property graph built using Tinkerpop's Blueprints library backed by neo4j.
 
 An early A-star implementation exists but a final heuristic has not been built.
 
 There is also a feed parser for the MBTA live data implemented and triggered with a Quartz job.
 
-There is a super simple web UI for testing that allows the user to enter a start/stop location then calculates a route through the transit system.  This exists for sanity testing only while I work on cleansing the raw dataset and coming up with several needed heuristics.   Geocoding for this is done with the MapQuest free Geocoding API.
+The service is accessed via JSON over HTTP.
+
 
 
 
